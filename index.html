@@ -1,46 +1,73 @@
-<html>
+<!DOCTYPE html>
+<html lang="">
   <head>
-      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.5/mediaelement-and-player.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/renderers/facebook.min.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.5/mediaelementplayer.min.css">
-      <style>
-          .mejs__overlay-button {
-            background-image: url("/path/to/mejs-controls.svg");
-          }
-          .mejs__overlay-loading-bg-img {
-            background-image: url("/path/to/mejs-controls.svg");
-          }
-          .mejs__button > button {
-            background-image: url("/path/to/mejs-controls.svg");
-          }
-      </style>
+    <title>multicam relive | 程式編一半</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <style>
+   iframe {
+    position: relative;
+    float: left;
+     }
+    </style>
   </head>
-    <body>
-      <video width="320" height="240" id="YTplayer" preload="preload" autoplay="autoplay" controls >
-        <source src="https://www.youtube.com/watch?v=y_jYdpK6upk" />
-      </video>
-    <video width="320" height="240" id="FBplayer" preload="preload" autoplay="autoplay" controls >
-      <source src="https://www.facebook.com/GitHub/videos/1134286623340293">
-    </video>
 
-  </body>
+  <body>
     <script>
-      $('video').mediaelementplayer({
-        hideVideoControlsOnLoad: 'true',
-        success: function(mediaElement, originalNode, instance) {
-            mediaElement.addEventListener('timeupdate', function(e) {
-              console.log(mediaElement.currentTime);
-            })
-          }
-        });
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    </script>
+    <div id="player0"></div>
+    <div id="player1"></div> <!--offset: 53220-->
+    <div id="player2"></div> <!--offset: 81660-->
+    
+<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fstandnewshk%2Fvideos%2F407353793207073%2F&show_text=false&width=734&autoplay=true&height=413" width="734" height="413" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
 
-function setTime(m, t) {
-  $( document ).click(function() {
-     m.setCurrentTime(t);
-    m.play();
-  }); 
-}
+<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FLamCheukTing.Official%2Fvideos%2F547539255780791%2F&show_text=false&width=734&autoplay=true&height=1305" width="734" height="1305" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+    </body>
+
+    <script>
+        var player = [];
+        function onYouTubeIframeAPIReady() {
+          player[0] = new YT.Player('player0', {
+            height: '390',
+            width: '640',
+            videoId: '5dhyC6Dxb7o',
+            events: {
+              'onReady': onPlayerReady,
+            }
+          });
+          player[1] = new YT.Player('player1', {
+            height: '390',
+            width: '640',
+            videoId: 'WB90VhmXytY',
+            events: {
+              'onReady': onPlayerReady,
+            }
+          });
+          player[2] = new YT.Player('player2', {
+            height: '390',
+            width: '640',
+            videoId: 'vsWB8eu0cmk',
+            events: {
+              'onReady': onPlayerReady,
+            }
+          });
+
+        }
+
+        function onPlayerReady(event) {
+          event.target.playVideo();
+        }
+
+        $( document ).click(function() {
+          player[1].seekTo(82000-53520, true);
+          player[2].seekTo(82000-81660, true);
+        }); 
 
     </script>
-    </html>
+  </html>
